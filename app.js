@@ -13,4 +13,9 @@ app.use(
     })
 )
 
+//user Routes
+
+app.use("/user", userRouter)
+app.use("/course", courseRouter)
+
 export default app
