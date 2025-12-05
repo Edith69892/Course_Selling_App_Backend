@@ -4,7 +4,7 @@
   "description": "course selling APP Backend from cohort 3.0 Harkirat Sir",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules ./index.js"
   },
   "repository": {
     "type": "git",
