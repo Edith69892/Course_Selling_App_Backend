@@ -2,19 +2,19 @@ import { Router } from "express";
 
 const router = Router()
 
-router.route("/signUp").post((req,res) => {
+router.route("/signUp").put((req, res) => {
     res.json({
-        message : "Sign Up success"
+        message: "Sign Up success"
     })
 })
 
-router.route("/signIn").post((req,res) => {
+router.route("/signIn").post((req, res) => {
     res.json({
-        message : ""
+        message: ""
     })
 })
-router.route("/purches").get((req,res) => {
-    
+router.route("/purches").get((req, res) => {
+
 })
 
 

@@ -2,15 +2,15 @@ import { Router } from "express";
 
 const router = Router()
 
-router.route("/updateCourse").put((req,res) => {
+router.route("/updateCourse").put((req, res) => {
     res.json({
-        message : "Sign Up success"
+        message: "Sign Up success"
     })
 })
 
-router.route("/bulkCourse").get((req,res) => {
+router.route("/bulkCourse").get((req, res) => {
     res.json({
-        message : ""
+        message: ""
     })
 })
 
