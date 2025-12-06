@@ -12,3 +12,5 @@ const purchaseSchema = new Schema({
         ref: "Course"
     }
 })
+
+export const Purches = mongoose.model("Purches", purchaseSchema) 

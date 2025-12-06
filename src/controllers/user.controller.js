@@ -4,6 +4,8 @@ import { z } from "zod";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { User } from "../models/user.model.js"
+import { Purches } from "../models/purchase.model.js";
+import { Course } from "../models/course.model.js";
 
 const signUp = asyncHandler(async (req, res, next) => {
     const requiredBody = z.object({
@@ -104,4 +106,34 @@ const signIn = asyncHandler(async (req, res, next) => {
     res.status(200).json({ message: "Login successfully.", token: token })
 })
 
-export { signUp, signIn }
+const getPurches = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+        throw new ApiError(400, "User not found.")
+    }
+
+    const purcheses = await Purches.find({
+        user: user?._id
+    });
+
+    let purchesIds = [];
+
+    for (let i = 0; i < (purcheses.length); i++) {
+        purchesIds = purcheses[i].course
+    };
+
+    const courses = await Course.find({
+        _id: { $in: purchesIds }
+    })
+
+    res.status(200).json({
+        message: "Purches fetched Successfully.",
+        purcheses: purcheses,
+        courses: courses
+    })
+
+})
+
+
+export { signUp, signIn, getPurches }
