@@ -1,6 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiError.js"
-import {z} from "zod"
+import {z} from "zod";
+import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { User } from "../models/user.model.js"
 
@@ -54,4 +55,50 @@ const signUp = asyncHandler(async (req,res,next) => {
     return res
     .status(201)
     .json({message: "User registered successfully.", user : registeredUser})
+})
+
+const signIn = asyncHandler(async (req,res,next)=> {
+
+    const signInSchema = z.object({
+        email : z.string().email("Invalid email address format"),
+        password : z.string().min(1, "Password cannot be empty")
+    });
+
+    let validateData =  requiredBody.safeParse(req.body);
+
+    if(!validateData.success){
+        res.json({
+            message: "Invalide input",
+            error : validateData.error
+        })
+        return
+    }
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const user = await User.findOne({
+        email : email
+    })
+
+    if(!user){
+        throw new ApiError(400, "User not found.");
+    }
+
+    //check password
+
+    const verifyPassword = await bcrypt.compare(password, user.password);
+
+    if(!verifyPassword){
+        throw new ApiError(401, "Unauthorized access , password incoorect.")
+    }
+
+    const token = jwt.sign(
+        {
+            _id : user._id
+        },
+        process.env.JWT_SECRET
+    );
+
+    res.status(200).json({message : "Login successfully.",token : token})
 })
