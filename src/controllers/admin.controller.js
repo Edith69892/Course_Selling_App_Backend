@@ -99,7 +99,7 @@ const signIn = asyncHandler(async (req, res, next) => {
         {
             _id: admin._id
         },
-        process.env.JWT_SECRET
+        process.env.JWT_ADMIN_SECRET
     );
 
     res.status(200).json({ message: "Login successfully.", token: token })
