@@ -5,7 +5,7 @@ const router = Router()
 router.route("/purches").post((req,res) => {
     
 })
-router.route("/courses").get((req,res) => {
+router.route("/preview").get((req,res) => {
     
 })
 
